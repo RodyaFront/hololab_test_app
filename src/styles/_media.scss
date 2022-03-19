@@ -1,0 +1,16 @@
+@media screen and (max-width: 980px){
+  .product-card {
+    flex-basis: 100%;
+    max-width: 100%;
+  }
+  .product-card-container {
+    padding:0 20px ;
+    gap: 20px;
+  }
+}
+@media screen and (max-width: 450px){
+  .product-card-container {
+    padding:0 10px ;
+    gap: 10px;
+  }
+}

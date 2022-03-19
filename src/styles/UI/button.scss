@@ -1,0 +1,27 @@
+.button {
+  cursor: pointer;
+  color: $main-color;
+  font-size: 16px;
+  padding: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  transition: 250ms ease-in-out;
+  text-transform: uppercase;
+  font-weight: 600;
+  box-shadow: 0 5px 10px transparent;
+  &.reverse {
+    background-color: $main-color;
+    color: #fff;
+  }
+  &:hover {
+    background-color: $main-color;
+    color: #fff;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 10px lighten($main-color, 15%);
+  }
+  &:active {
+    background-color: darken($main-color, 20%);
+    transform: translateY(-1px) scale(0.99);
+    box-shadow: 0 2px 3px lighten($main-color, 15%);
+  }
+}

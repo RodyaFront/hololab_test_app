@@ -1,0 +1,34 @@
+.container {
+  max-width: 1136px;
+  margin: auto;
+}
+
+.App {
+  margin-top: 115px;
+  margin-bottom: 220px;
+}
+
+.price-value {
+  position: relative;
+  font-size: 60px;
+  line-height: 72px;
+  padding-left: 18px;
+  &::before {
+    display: inline-block;
+    content: '$';
+    position: absolute;
+    left: 0;
+    top: 13px;
+    font-size: 30px;
+    line-height: 35px;
+  }
+}
+
+.buy-cheapest-btn {
+  margin-top: 69px;
+  .button {
+    max-width: 235px;
+    margin: auto;
+    text-align: center;
+  }
+}
