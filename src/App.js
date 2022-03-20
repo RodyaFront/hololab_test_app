@@ -2,6 +2,7 @@ import ProductCard from "./components/ProductCard";
 import OrderModal from "./components/OrderModal";
 import {useEffect, useRef, useState} from "react";
 import {productCardsController} from "./services/productCardsController";
+import CartIcon from "./components/icons/CartIcon";
 
 
 function App() {
@@ -9,6 +10,7 @@ function App() {
     const [dialog, setDialog] = useState(false)
     const [cards, setCards] = useState([])
     const [modalData, setModalData] = useState({})
+    const [cheapestBtnVisible, setCheapestBtnVisible] = useState(false)
 
     useEffect(async () => {
         appRef.current.addEventListener('openModal', (event) => handleModalEvent(true, event))
@@ -43,6 +45,12 @@ function App() {
                 </section>
                 <div className="buy-cheapest-btn">
                     <div className="button reverse" onClick={handleBuyCheapest}>Buy cheapest</div>
+                </div>
+                <div className={`buy-cheapest-btn mobile ${cheapestBtnVisible ? 'visible' : ''}`}>
+                    <div className="button reverse" onClick={handleBuyCheapest}>Buy cheapest</div>
+                    <div className="buy-cheapest-btn__toggle" onClick={()=>setCheapestBtnVisible(!cheapestBtnVisible)}>
+                        <CartIcon width='50px' height='50px'/>
+                    </div>
                 </div>
             </div>
             <OrderModal dialog={dialog} formData={modalData}/>

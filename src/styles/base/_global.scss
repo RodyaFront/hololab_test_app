@@ -26,6 +26,38 @@
 
 .buy-cheapest-btn {
   margin-top: 69px;
+  &.mobile {
+    margin: 0;
+    display: none;
+    position: fixed;
+    bottom: -53px;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: 350ms cubic-bezier(0.11, 1.1, 0.73, 1.13);
+    &.visible {
+      bottom: 25px;
+    }
+  }
+  &__toggle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    top: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: darken($main-color,10%);
+    border: 1px solid #adadad;
+    border-top-width: 0 ;
+    svg {
+      width: 30px;
+      height: 30px;
+    }
+  }
   .button {
     max-width: 235px;
     margin: auto;

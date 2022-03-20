@@ -28,6 +28,8 @@
     line-height: 48px;
   }
   &__footer {
+    flex-wrap: wrap;
+    gap: 10px;
     margin-top: 40px;
     display: flex;
     justify-content: space-between;
