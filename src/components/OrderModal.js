@@ -3,12 +3,12 @@ import OrderForm from "./OrderForm";
 
 function OrderModal({dialog, formData}) {
     const modalRef = useRef(null)
+    const MODAL_INNER_CLASS = 'modal-window'
     const [modalState, setModalState] = useState(false)
 
-    function closeModal() {
-        modalRef.current
-            .dispatchEvent(getCloseModalEvent())
-    }
+    useEffect(()=>{
+        modalRef.current.onclick = handleModalOutsideClick
+    },[])
 
     useEffect(()=> {
         setModalState(dialog)
@@ -17,6 +17,27 @@ function OrderModal({dialog, formData}) {
         }
         window.addEventListener('keydown', handleModalKeydown)
     }, [dialog])
+
+    function handleModalOutsideClick(e) {
+        const {path} = e
+
+        const clickInside = path.reduce((reducer, current) => {
+            const containsInnerModal = !!current?.classList?.contains(MODAL_INNER_CLASS)
+            if(containsInnerModal){
+                return reducer = containsInnerModal
+            }
+            return reducer
+        },false)
+
+        if(!clickInside) {
+            closeModal()
+        }
+    }
+
+    function closeModal() {
+        modalRef.current
+            .dispatchEvent(getCloseModalEvent())
+    }
 
     function handleModalKeydown(e) {
         if(e.keyCode === 27) closeModal()
@@ -28,7 +49,7 @@ function OrderModal({dialog, formData}) {
 
     return (
         <div className={`modal ${modalState ? 'active' : ''}`} ref={modalRef}>
-            <div className="modal__inner">
+            <div className={`modal__inner ${MODAL_INNER_CLASS}`}>
                 <div className="modal__close" onClick={closeModal}/>
                 <div className="modal__type">{formData?.category}</div>
                 <div className="modal__title">{formData?.name}</div>
