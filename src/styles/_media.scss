@@ -8,6 +8,43 @@
     gap: 20px;
   }
 }
+@media screen and (max-width: 650px){
+  .buy-cheapest-btn {
+    display: none;
+    &.mobile {
+      display: block;
+    }
+    & .button {
+      white-space: nowrap;
+    }
+  }
+  .modal {
+    &__inner {
+      min-width: initial;
+      margin: 0 15px;
+    }
+  }
+
+  .product-card {
+    padding: 10px 20px;
+    &__footer {
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    &__price {
+      font-size: 34px;
+      &::before {
+        font-size: 18px;
+      }
+    }
+    &__title {
+      font-size: 36px;
+    }
+    &__footer {
+      margin-top: 10px;
+    }
+  }
+}
 @media screen and (max-width: 450px){
   .product-card-container {
     padding:0 10px ;
