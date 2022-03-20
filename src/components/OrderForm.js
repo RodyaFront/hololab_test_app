@@ -1,6 +1,7 @@
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 
 function OrderForm({reset}) {
+    const formRef = useRef(null)
     const initialValidation = {
         name: {},
         number: {},
@@ -26,7 +27,7 @@ function OrderForm({reset}) {
         setValidation(initialValidation)
     }
 
-    function handleInputBlur({target}) {
+    function validateOnBlur({target}) {
         const {name: inputName} = target
         const newValidation = {...validation}
         const value = formData[inputName]
@@ -71,7 +72,21 @@ function OrderForm({reset}) {
     }
 
     function handleSubmitOrder() {
+       if(isFormValid()) submitOrder()
+    }
+
+    function dispatchCloseModal() {
+        formRef.current
+            .dispatchEvent(new CustomEvent('closeModal',{bubbles: true}))
+    }
+
+    function submitOrder() {
+        dispatchCloseModal()
+    }
+
+    function isFormValid() {
         const newValidation = {...validation}
+        let isValid = true;
         for(const key of Object.keys(validation)) {
             const value = formData[key]
             const rules = validationRules[key]
@@ -80,12 +95,17 @@ function OrderForm({reset}) {
                 newValidation[key].touched = true
             }
             newValidation[key].valid =  checkValueValidity(value, rules)
+
+            if(isValid) {
+                isValid = newValidation[key].valid
+            }
         }
         setValidation(newValidation)
+        return isValid
     }
 
     return (
-        <div className="modal__form form">
+        <div className="modal__form form" ref={formRef}>
             <div className='form__item'>
                 <input
                     type="text"
@@ -93,7 +113,7 @@ function OrderForm({reset}) {
                     name="name"
                     value={formData.name}
                     onChange={e => setFormData({...formData, name: e.target.value})}
-                    onBlur={handleInputBlur}
+                    onBlur={validateOnBlur}
                 />
             </div>
             {validation?.name?.empty && validation?.name?.touched &&
@@ -107,7 +127,7 @@ function OrderForm({reset}) {
                     name="number"
                     value={formData.number}
                     onChange={e => setFormData({...formData, number: e.target.value})}
-                    onBlur={handleInputBlur}
+                    onBlur={validateOnBlur}
                 />
             </div>
             {validation?.number?.empty && validation?.number?.touched &&
