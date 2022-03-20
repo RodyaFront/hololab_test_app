@@ -34,15 +34,12 @@ function OrderModal({dialog, formData}) {
 
     function closeModal() {
         modalRef.current
-            .dispatchEvent(getCloseModalEvent())
+            .dispatchEvent(new CustomEvent('closeModal',{bubbles: true}))
+
     }
 
     function handleModalKeydown(e) {
         if(e.keyCode === 27) closeModal()
-    }
-
-    function getCloseModalEvent() {
-        return new CustomEvent('closeModal',{bubbles: true})
     }
 
     return (
