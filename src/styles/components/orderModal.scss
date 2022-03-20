@@ -10,11 +10,11 @@
   align-items: center;
   opacity: 0;
   pointer-events: none;
-  transition: 350ms ease-in-out;
+  transition: 250ms ease-in-out;
   &.active {
     opacity: 1;
     pointer-events: all;
-    &__inner {
+    .modal__inner {
       transform: scale(1);
     }
   }
@@ -29,8 +29,9 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    transform: scale(0.90);
+    transform: scale(0.95);
     min-width: 384px;
+    transition: 300ms ease-in-out;
   }
   &__type {
     text-transform: uppercase;

@@ -1,17 +1,31 @@
 import {useEffect, useState} from "react";
 
-function OrderForm() {
-    const [validation, setValidation] = useState({
+function OrderForm({reset}) {
+    const initialValidation = {
         name: {},
         number: {},
-    })
-    const [formData, setFormData] = useState({
+    }
+    const initialFormData = {
         name: '',
         number: '',
-    })
+    }
+    const [validation, setValidation] = useState(initialValidation)
+    const [formData, setFormData] = useState(initialFormData)
     const validationRules = {
         name: { type: 'string' },
         number: { type: 'number' }
+    }
+
+    useEffect(()=>{
+        const isModalClosing = !reset
+        if(isModalClosing){
+            restFormData()
+        }
+    },[reset])
+
+    function restFormData() {
+        setFormData(initialFormData)
+        setValidation(initialValidation)
     }
 
     function handleInputBlur({target}) {
@@ -44,22 +58,22 @@ function OrderForm() {
         }
 
         return false
+    }
 
-        function validateStringValue(){
-            const haveNumbers = value.search(/\d/) != -1
-            if(haveNumbers) {
-                return false
-            }
-            return true
-        }
-        function validateNumberValue(){
-            const reg = new RegExp('^[0-9]+$');
-            const haveOnlyNumbers = reg.test(value)
-            if(haveOnlyNumbers) {
-                return true
-            }
+    function validateStringValue(value){
+        const haveNumbers = value.search(/\d/) != -1
+        if(haveNumbers) {
             return false
         }
+        return true
+    }
+    function validateNumberValue(value){
+        const reg = new RegExp('^[0-9]+$');
+        const haveOnlyNumbers = reg.test(value)
+        if(haveOnlyNumbers) {
+            return true
+        }
+        return false
     }
 
     function handleSubmitOrder() {
