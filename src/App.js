@@ -9,6 +9,7 @@ function App() {
     const [dialog, setDialog] = useState(false)
     const [cards, setCards] = useState([])
     const [modalData, setModalData] = useState({})
+
     useEffect(async () => {
         appRef.current.addEventListener('openModal', (event) => handleModalEvent(true, event))
         appRef.current.addEventListener('closeModal', () => handleModalEvent(false))

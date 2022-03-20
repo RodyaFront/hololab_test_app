@@ -9,18 +9,16 @@ function OrderForm({reset}) {
         name: '',
         number: '',
     }
-    const [validation, setValidation] = useState(initialValidation)
-    const [formData, setFormData] = useState(initialFormData)
     const validationRules = {
         name: { type: 'string' },
         number: { type: 'number' }
     }
+    const [validation, setValidation] = useState(initialValidation)
+    const [formData, setFormData] = useState(initialFormData)
 
     useEffect(()=>{
         const isModalClosing = !reset
-        if(isModalClosing){
-            restFormData()
-        }
+        if(isModalClosing) restFormData()
     },[reset])
 
     function restFormData() {
@@ -61,19 +59,15 @@ function OrderForm({reset}) {
     }
 
     function validateStringValue(value){
-        const haveNumbers = value.search(/\d/) != -1
-        if(haveNumbers) {
-            return false
-        }
-        return true
+        const haveNumbers = value.search(/\d/) !== -1
+        return !haveNumbers;
+
     }
     function validateNumberValue(value){
         const reg = new RegExp('^[0-9]+$');
         const haveOnlyNumbers = reg.test(value)
-        if(haveOnlyNumbers) {
-            return true
-        }
-        return false
+        return haveOnlyNumbers;
+
     }
 
     function handleSubmitOrder() {
@@ -88,7 +82,6 @@ function OrderForm({reset}) {
             newValidation[key].valid =  checkValueValidity(value, rules)
         }
         setValidation(newValidation)
-        console.log(newValidation)
     }
 
     return (
