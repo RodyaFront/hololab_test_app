@@ -1,20 +1,18 @@
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useRef} from "react";
 import OrderForm from "./OrderForm";
 
-function OrderModal({dialog, formData}) {
+function OrderModal({dialog, formData, switchModal}) {
     const modalRef = useRef(null)
     const MODAL_INNER_CLASS = 'modal-window'
 
     useEffect(()=>{
+        window.addEventListener('keydown', handleModalKeydown)
         modalRef.current.onclick = handleModalOutsideClick
     },[])
 
-    useEffect(()=> {
-        if(!dialog){ // clean event when modal is closed
-            return window.removeEventListener('keydown', handleModalKeydown)
-        }
-        window.addEventListener('keydown', handleModalKeydown)
-    }, [dialog])
+    useEffect(()=> ()=>{
+        window.removeEventListener('keydown', handleModalKeydown)
+    }, [])
 
     function handleModalOutsideClick(e) {
         const {path} = e
@@ -33,9 +31,7 @@ function OrderModal({dialog, formData}) {
     }
 
     function closeModal() {
-        modalRef.current
-            .dispatchEvent(new CustomEvent('closeModal',{bubbles: true}))
-
+        switchModal(false)
     }
 
     function handleModalKeydown(e) {

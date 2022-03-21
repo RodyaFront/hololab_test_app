@@ -11,11 +11,18 @@ function App() {
     const [cards, setCards] = useState([])
     const [modalData, setModalData] = useState({})
     const [cheapestBtnVisible, setCheapestBtnVisible] = useState(false)
+    const [cheapestCard, setCheapestCard] = useState(null)
 
     useEffect(async () => {
         appRef.current.addEventListener('openModal', (event) => handleModalEvent(true, event))
         appRef.current.addEventListener('closeModal', () => handleModalEvent(false))
-        setCards(await productCardsController.getCards())
+        const cards = await productCardsController.getCards()
+        if(!cards) {
+            return
+        }
+        setCards(fixCards(cards))
+        console.log(fixCards(cards))
+        setCheapestCard(getCheapestCard(cards))
     }, [])
 
     function handleModalEvent(state, event) {
@@ -25,16 +32,32 @@ function App() {
         setDialog(state)
     }
 
-    function handleBuyCheapest() {
-        const cheapest = cards.reduce((cheapest, product) => {
+    function fixCards(cards = []) {
+        return cards.map((card,idx) => {
+            card.id = idx
+            return card
+        })
+    }
+
+    function getCheapestCard(cards) {
+        return cards.reduce((cheapest, product) => {
             if(product.price < cheapest.price) {
                 return product
             }
             return cheapest
         },cards[0])
+    }
 
+    function handleBuyCheapest() {
         setDialog(true)
-        setModalData(cheapest)
+        setModalData(cheapestCard)
+    }
+
+    function handleSwitchModal(state) {
+        if(state) {
+            return setDialog(state)
+        }
+        setDialog(!dialog)
     }
 
     return (
@@ -53,7 +76,7 @@ function App() {
                     </div>
                 </div>
             </div>
-            <OrderModal dialog={dialog} formData={modalData}/>
+            <OrderModal dialog={dialog} formData={modalData} switchModal={handleSwitchModal}/>
         </div>
     );
 }
