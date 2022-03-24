@@ -11,16 +11,16 @@ function OrderForm({reset}) {
         number: '',
     }
     const validationRules = {
-        name: { type: 'string' },
-        number: { type: 'number' }
+        name: {type: 'string'},
+        number: {type: 'number'}
     }
     const [validation, setValidation] = useState(initialValidation)
     const [formData, setFormData] = useState(initialFormData)
 
-    useEffect(()=>{
+    useEffect(() => {
         const isModalClosing = !reset
-        if(isModalClosing) restFormData()
-    },[reset])
+        if (isModalClosing) restFormData()
+    }, [reset])
 
     function restFormData() {
         setFormData(initialFormData)
@@ -37,7 +37,7 @@ function OrderForm({reset}) {
         newValidation[inputName].empty = !checkValueValidity(value, rules) && value === ''
         newValidation[inputName].touched = true
 
-        if(value === '') {
+        if (value === '') {
             newValidation[inputName].valid = true
         }
 
@@ -45,26 +45,27 @@ function OrderForm({reset}) {
     }
 
     function checkValueValidity(value, rules) {
-        if(value === '') {
+        if (value === '') {
             return false
         }
 
-        if(rules.type === 'string') {
+        if (rules.type === 'string') {
             return validateStringValue(value)
         }
-        if(rules.type === 'number') {
+        if (rules.type === 'number') {
             return validateNumberValue(value)
         }
 
         return false
     }
 
-    function validateStringValue(value){
+    function validateStringValue(value) {
         const haveNumbers = value.search(/\d/) !== -1
         return !haveNumbers;
 
     }
-    function validateNumberValue(value){
+
+    function validateNumberValue(value) {
         const reg = new RegExp('^[0-9]+$');
         const haveOnlyNumbers = reg.test(value)
         return haveOnlyNumbers;
@@ -72,12 +73,13 @@ function OrderForm({reset}) {
     }
 
     function handleSubmitOrder() {
-       if(isFormValid()) submitOrder()
+
+        if (isFormValid()) submitOrder()
     }
 
     function dispatchCloseModal() {
         formRef.current
-            .dispatchEvent(new CustomEvent('closeModal',{bubbles: true}))
+            .dispatchEvent(new CustomEvent('closeModal', {bubbles: true}))
     }
 
     function submitOrder() {
@@ -87,16 +89,16 @@ function OrderForm({reset}) {
     function isFormValid() {
         const newValidation = {...validation}
         let isValid = true;
-        for(const key of Object.keys(validation)) {
+        for (const key of Object.keys(validation)) {
             const value = formData[key]
             const rules = validationRules[key]
-            if(value === '') {
+            if (value === '') {
                 newValidation[key].empty = true
                 newValidation[key].touched = true
             }
-            newValidation[key].valid =  checkValueValidity(value, rules)
+            newValidation[key].valid = checkValueValidity(value, rules)
 
-            if(isValid) {
+            if (isValid) {
                 isValid = newValidation[key].valid
             }
         }

@@ -15,7 +15,7 @@
     opacity: 1;
     pointer-events: all;
     .modal__inner {
-      transform: scale(1);
+      transform: scale(1) translateY(0);
     }
   }
   &__inner {
@@ -29,7 +29,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    transform: scale(0.95);
+    transform: scale(0.95) translateY(-25px);
     min-width: 384px;
     transition: 300ms ease-in-out;
   }
@@ -67,7 +67,7 @@
     height: 40px;
     background-color: #F2F2F2;
     border-radius: 100px;
-    transition: 150ms ease-in-out;
+    transition: 250ms ease-in-out;
     background-image: url('../../images/close.svg');
     background-size: 10px 10px;
     background-position: center;
@@ -75,7 +75,8 @@
 
     &:hover {
       background-color: #dcdcdc;
-      transform: scale(1.1);
+      transform: scale(1.05) translateY(-3px);
+      background-size: 12px 12px;
     }
     &:active {
       transform: scale(1);

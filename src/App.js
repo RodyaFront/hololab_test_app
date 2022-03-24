@@ -3,6 +3,7 @@ import OrderModal from "./components/OrderModal";
 import {useEffect, useRef, useState} from "react";
 import {productCardsController} from "./services/productCardsController";
 import CartIcon from "./components/icons/CartIcon";
+import LoadingScreen from "./components/LoadingScreen";
 
 
 function App() {
@@ -52,16 +53,9 @@ function App() {
         setDialog(true)
         setModalData(cheapestCard)
     }
-
-    function handleSwitchModal(state) {
-        if(state) {
-            return setDialog(state)
-        }
-        setDialog(!dialog)
-    }
-
     return (
         <div className="App" ref={appRef}>
+            <LoadingScreen />
             <div className="container">
                 <section className='product-card-container'>
                     {cards?.map(card => <ProductCard product={card} key={card.id}/>)}
@@ -76,7 +70,7 @@ function App() {
                     </div>
                 </div>
             </div>
-            <OrderModal dialog={dialog} formData={modalData} switchModal={handleSwitchModal}/>
+            <OrderModal dialog={dialog} formData={modalData}/>
         </div>
     );
 }

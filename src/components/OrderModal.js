@@ -31,7 +31,7 @@ function OrderModal({dialog, formData, switchModal}) {
     }
 
     function closeModal() {
-        switchModal(false)
+        modalRef.current.dispatchEvent(new Event('closeModal',{bubbles: true}))
     }
 
     function handleModalKeydown(e) {

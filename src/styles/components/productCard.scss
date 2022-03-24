@@ -36,7 +36,7 @@
     align-items: center;
   }
   &:hover {
-    transform: scale(1.01);
-    box-shadow: 0 0 9px 5px rgba(0, 0, 0, 0.1);
+    transform: scale(1.01) translateY(-10px);
+    box-shadow: 0 10px 15px 5px rgba(0, 0, 0, 0.1);
   }
 }
